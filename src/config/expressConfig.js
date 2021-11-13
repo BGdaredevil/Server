@@ -13,9 +13,9 @@ export default (app) => {
       credentials: true,
     })
   );
-  app.use((req, res, next) => {
-    res.header("Access-Control-allow-Credentials", true);
-    next();
-  });
+  // app.use((req, res, next) => {
+  //   res.header("Access-Control-allow-Credentials", true);
+  //   next();
+  // });
   app.use(router);
 };

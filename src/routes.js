@@ -1,8 +1,9 @@
 import { Router } from "express";
 const router = Router();
 
-import authController from "./controllers/authController.js";
-import postController from "./controllers/postController.js";
+import carController from "./controllers/carController.js";
+import shopController from "./controllers/shopController.js";
+import userController from "./controllers/userController.js";
 
 // * debug
 router.use((req, res, next) => {
@@ -11,8 +12,10 @@ router.use((req, res, next) => {
 });
 // * debug
 
-router.use("/user", authController);
-router.use("/posts", postController);
+router.use("/car", carController);
+router.use("/shop", shopController);
+router.use("/user", userController);
+
 router.use("*", (req, res) => {
   console.log(req.body);
   res.write("Hello i am restfull API -- please use my endpoints correctly -- /user; -- /posts");
