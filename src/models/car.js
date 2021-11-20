@@ -14,8 +14,9 @@ const CarSchema = new mongoose.Schema({
     type: Number,
   },
   owner: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: "User",
+    type: String,
   },
   workHistory: {
     //! make it a separate mongoose model
