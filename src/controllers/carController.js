@@ -4,7 +4,6 @@ import carService from "../services/carService.js";
 const router = Router();
 
 router.get("/:id", async (req, res) => {
-  console.log(req.params.id);
   try {
     let tt = await carService.getAllOfUser(req.params.id);
     res.json(tt);
@@ -15,8 +14,29 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+router.get("/details/:id", async (req, res) => {
+  try {
+    let tt = await carService.getOne(req.params.id);
+    res.json(tt);
+    res.status(200).end();
+  } catch (err) {
+    res.json(err);
+    res.status(400).end();
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    let tt = await carService.del(req.params.id);
+    res.json(tt);
+    res.status(200).end();
+  } catch (err) {
+    res.json(err);
+    res.status(400).end();
+  }
+});
+
 router.post("/", async (req, res) => {
-  console.log("here", req.body);
   try {
     const rr = await carService.create({
       make: req.body.make,

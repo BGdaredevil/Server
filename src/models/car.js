@@ -18,10 +18,12 @@ const CarSchema = new mongoose.Schema({
     // ref: "User",
     type: String,
   },
-  workHistory: {
-    //! make it a separate mongoose model
-    type: String,
-  },
+  workHistory: [
+    {
+      //! make it a separate mongoose model
+      type: String,
+    },
+  ],
 });
 
 const Car = mongoose.model("Car", CarSchema);

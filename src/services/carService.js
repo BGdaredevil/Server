@@ -5,7 +5,9 @@ const create = (data) => {
   return Car.create(data);
 };
 
-const getOne = (id) => {};
+const getOne = (id) => {
+  return Car.findById(id);
+};
 
 const getAllOfUser = (uid) => {
   return Car.find({ owner: uid }).lean();
@@ -13,7 +15,9 @@ const getAllOfUser = (uid) => {
 
 const edit = () => {};
 
-const del = () => {};
+const del = (id) => {
+  return Car.findByIdAndDelete(id);
+};
 
 const carService = { create, getOne, getAllOfUser, edit, del };
 
