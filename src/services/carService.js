@@ -13,7 +13,9 @@ const getAllOfUser = (uid) => {
   return Car.find({ owner: uid }).lean();
 };
 
-const edit = () => {};
+const edit = (id, data) => {
+  return Car.findOneAndUpdate({ _id: id }, data, { runValidators: true });
+};
 
 const del = (id) => {
   return Car.findByIdAndDelete(id);
