@@ -1,7 +1,6 @@
 import Car from "../models/car.js";
 
 const create = (data) => {
-  console.log("creating");
   return Car.create(data);
 };
 
