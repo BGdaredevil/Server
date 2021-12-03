@@ -10,6 +10,9 @@ const ShopSchema = new mongoose.Schema({
   specification: {
     type: String,
   },
+  imageUrl: {
+    type: String,
+  },
   offeredServices: [
     {
       //! make it a separate mongoose model

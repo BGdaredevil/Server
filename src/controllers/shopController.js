@@ -9,6 +9,7 @@ router.post("/", async (req, res) => {
       name: req.body.name,
       specification: req.body.specification,
       offeredServices: req.body.services,
+      imageUrl: req.body.imageUrl,
       owner: req.body.owner,
     });
     res.json(r);
@@ -55,6 +56,17 @@ router.patch("/details/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     let tt = await shopService.del(req.params.id);
+    res.json(tt);
+    res.status(200).end();
+  } catch (err) {
+    res.json(err);
+    res.status(400).end();
+  }
+});
+
+router.get("/shops/:type", async (req, res) => {
+  try {
+    let tt = await shopService.getAllOfType(req.params.type);
     res.json(tt);
     res.status(200).end();
   } catch (err) {

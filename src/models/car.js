@@ -13,6 +13,9 @@ const CarSchema = new mongoose.Schema({
   odometer: {
     type: Number,
   },
+  imageUrl: {
+    type: String,
+  },
   owner: {
     // type: mongoose.Schema.Types.ObjectId,
     // ref: "User",

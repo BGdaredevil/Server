@@ -57,6 +57,7 @@ router.post("/", async (req, res) => {
       model: req.body.model,
       year: req.body.year,
       odometer: req.body.odometer,
+      imageUrl: req.body.imageUrl,
       owner: req.body.owner,
     });
     console.log(rr);

@@ -22,7 +22,15 @@ const getAllOfUser = (uid) => {
   return Shop.find({ owner: uid }).lean();
 };
 
-const getAllOfType = (type) => {};
+const getAllOfType = (type) => {
+  const types = {
+    body: "bodyShop",
+    mechanics: "mechanicShop",
+    performance: "performanceShop",
+  };
+
+  return Shop.find({ specification: types[type] });
+};
 
 const getAllWithService = (service) => {};
 
