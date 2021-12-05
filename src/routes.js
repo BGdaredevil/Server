@@ -4,6 +4,7 @@ const router = Router();
 import carController from "./controllers/carController.js";
 import shopController from "./controllers/shopController.js";
 import userController from "./controllers/userController.js";
+import serviceController from "./controllers/serviceControler.js";
 
 // * debug
 router.use((req, res, next) => {
@@ -15,6 +16,7 @@ router.use((req, res, next) => {
 router.use("/car", carController);
 router.use("/shop", shopController);
 router.use("/user", userController);
+router.use("/service", serviceController);
 
 router.use("*", (req, res) => {
   console.log(req.body);

@@ -1,21 +1,11 @@
 import mongoose from "mongoose";
 
 const CarSchema = new mongoose.Schema({
-  make: {
-    type: String,
-  },
-  model: {
-    type: String,
-  },
-  year: {
-    type: Number,
-  },
-  odometer: {
-    type: Number,
-  },
-  imageUrl: {
-    type: String,
-  },
+  make: { type: String },
+  model: { type: String },
+  year: { type: Number },
+  odometer: { type: Number },
+  imageUrl: { type: String },
   owner: {
     // type: mongoose.Schema.Types.ObjectId,
     // ref: "User",

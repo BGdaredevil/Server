@@ -13,12 +13,15 @@ const ShopSchema = new mongoose.Schema({
   imageUrl: {
     type: String,
   },
-  offeredServices: [
-    {
-      //! make it a separate mongoose model
-      type: String,
-    },
-  ],
+  offeredServices: {
+    registered: {},
+    notRegistered: [
+      {
+        //! make it a separate mongoose model
+        type: String,
+      },
+    ],
+  },
   rating: {
     type: Number,
     default: 10,

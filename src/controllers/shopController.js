@@ -8,7 +8,9 @@ router.post("/", async (req, res) => {
     let r = await shopService.create({
       name: req.body.name,
       specification: req.body.specification,
-      offeredServices: req.body.services,
+      offeredServices: {
+        notRegistered: req.body.services,
+      },
       imageUrl: req.body.imageUrl,
       owner: req.body.owner,
     });
