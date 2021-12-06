@@ -14,7 +14,12 @@ const ShopSchema = new mongoose.Schema({
     type: String,
   },
   offeredServices: {
-    registered: {},
+    registered: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Service",
+      },
+    ],
     notRegistered: [
       {
         //! make it a separate mongoose model

@@ -1,6 +1,10 @@
 import Service from "../models/service.js";
+import shopService from "./shopService.js";
 
-const create = () => {};
+const create = async (data, shopId) => {
+  const service = await Service.create(data);
+  return shopService.regService(shopId, service);
+};
 const getOne = () => {};
 const getAll = () => {};
 const getAllShopsWith = () => {};

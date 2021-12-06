@@ -34,6 +34,15 @@ const getAllOfType = (type) => {
 
 const getAllWithService = (service) => {};
 
+const regService = async (shopId, service) => {
+  const shop = await Shop.findById(shopId);
+  shop.offeredServices.registered.push(service._id);
+  shop.offeredServices.notRegistered = shop.offeredServices.notRegistered.filter(
+    (x) => x !== service.name
+  );
+  return shop.updateOne({ $set: { offeredServices: shop.offeredServices } });
+};
+
 const shopService = {
   create,
   getOne,
@@ -43,6 +52,7 @@ const shopService = {
   getAllOfUser,
   getAllOfType,
   getAllWithService,
+  regService,
 };
 
 export default shopService;
