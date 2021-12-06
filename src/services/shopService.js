@@ -5,7 +5,13 @@ const create = (data) => {
 };
 
 const getOne = (id) => {
-  return Shop.findById(id).lean();
+  return Shop.findById(id)
+    .populate({
+      path: "offeredServices",
+      model: "Shop",
+      populate: "registered",
+    })
+    .lean();
 };
 
 const getAll = () => {};
