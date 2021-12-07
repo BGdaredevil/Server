@@ -16,8 +16,15 @@ const getOne = (id) => {
 
 const getAll = () => {};
 
-const edit = (id, data) => {
-  return Shop.findOneAndUpdate({ _id: id }, data, { runValidators: true });
+const edit = async (id, data) => {
+  const shop = await Shop.findById(id);
+  shop.offeredServices.notRegistered.push(...data.offeredServices.notRegistered);
+  shop.offeredServices.notRegistered = [...new Set(shop.offeredServices.notRegistered)];
+  return Shop.findOneAndUpdate(
+    { _id: id },
+    { ...data, offeredServices: shop.offeredServices },
+    { runValidators: true }
+  );
 };
 
 const del = (id) => {
@@ -46,7 +53,8 @@ const regService = async (shopId, service) => {
   shop.offeredServices.notRegistered = shop.offeredServices.notRegistered.filter(
     (x) => x !== service.name
   );
-  return shop.updateOne({ $set: { offeredServices: shop.offeredServices } });
+  await shop.updateOne({ $set: { offeredServices: shop.offeredServices } });
+  return getOne(shopId);
 };
 
 const shopService = {
