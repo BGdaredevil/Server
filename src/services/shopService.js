@@ -27,12 +27,34 @@ const edit = async (id, data) => {
   );
 };
 
+const remService = async (shopId, serviceId) => {
+  const shop = await Shop.findById(shopId);
+  shop.offeredServices.registered = shop.offeredServices.registered.filter(
+    (e) => e._id.toString() !== serviceId
+  );
+  return Shop.findOneAndUpdate(
+    { _id: shopId },
+    { ...shop, offeredServices: shop.offeredServices },
+    { runValidators: true, new: true }
+  ).populate({
+    path: "offeredServices",
+    model: "Shop",
+    populate: "registered",
+  });
+};
+
 const del = (id) => {
   return Shop.findByIdAndDelete(id);
 };
 
 const getAllOfUser = (uid) => {
-  return Shop.find({ owner: uid }).lean();
+  return Shop.find({ owner: uid })
+    .populate({
+      path: "offeredServices",
+      model: "Shop",
+      populate: "registered",
+    })
+    .lean();
 };
 
 const getAllOfType = (type) => {
@@ -67,6 +89,7 @@ const shopService = {
   getAllOfType,
   getAllWithService,
   regService,
+  remService,
 };
 
 export default shopService;

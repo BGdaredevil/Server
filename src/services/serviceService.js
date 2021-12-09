@@ -9,8 +9,17 @@ const getOne = () => {};
 const getAll = () => {};
 const getAllShopsWith = () => {};
 const getAllInShop = () => {};
-const edit = () => {};
-const del = () => {};
+const edit = (id, data) => {
+  return Service.findOneAndUpdate(
+    { _id: id },
+    { price: data.price, description: data.description },
+    { runValidators: true }
+  );
+};
+const del = async (id) => {
+  const deletedService = await Service.findByIdAndDelete(id);
+  return shopService.remService(deletedService.offeringShop, id);
+};
 
 const serviceService = {
   create,
