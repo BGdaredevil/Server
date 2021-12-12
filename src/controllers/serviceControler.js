@@ -34,6 +34,18 @@ router.patch("/details/:id", async (req, res) => {
   }
 });
 
+router.patch("/:id", async (req, res) => {
+  try {
+    console.log(req.body);
+    let tt = await serviceService.bookACar(req.params.id, req.body.car);
+    res.json(tt);
+    res.status(200).end();
+  } catch (err) {
+    res.json(err);
+    res.status(400).end();
+  }
+});
+
 router.delete("/:id", async (req, res) => {
   try {
     let tt = await serviceService.del(req.params.id);

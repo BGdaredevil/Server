@@ -8,6 +8,7 @@ const ServiceSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Shop",
   },
+  bookings: [{ type: mongoose.Schema.Types.ObjectId, ref: "Car" }],
 });
 
 const Service = mongoose.model("Service", ServiceSchema);

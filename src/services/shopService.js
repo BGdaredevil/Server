@@ -8,8 +8,15 @@ const getOne = (id) => {
   return Shop.findById(id)
     .populate({
       path: "offeredServices",
-      model: "Shop",
-      populate: "registered",
+      populate: {
+        path: "registered",
+        model: "Service",
+        populate: {
+          path: "bookings",
+          model: "Car",
+        },
+      },
+      // model: "Shop",
     })
     .lean();
 };

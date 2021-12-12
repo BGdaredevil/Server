@@ -9,6 +9,12 @@ const getOne = () => {};
 const getAll = () => {};
 const getAllShopsWith = () => {};
 const getAllInShop = () => {};
+const bookACar = async (serviceId, carId) => {
+  const service = await Service.findById(serviceId);
+  service.bookings.push(carId);
+  await service.updateOne({ $set: { bookings: service.bookings } });
+  return shopService.getOne(service.offeringShop);
+};
 const edit = (id, data) => {
   return Service.findOneAndUpdate(
     { _id: id },
@@ -26,6 +32,7 @@ const serviceService = {
   getOne,
   getAll,
   getAllInShop,
+  bookACar,
   getAllShopsWith,
   edit,
   del,
