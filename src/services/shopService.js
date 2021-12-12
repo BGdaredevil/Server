@@ -64,7 +64,13 @@ const getAllOfType = (type) => {
     performance: "performanceShop",
   };
 
-  return Shop.find({ specification: types[type] });
+  return Shop.find({ specification: types[type] })
+    .populate({
+      path: "offeredServices",
+      model: "Shop",
+      populate: "registered",
+    })
+    .lean();
 };
 
 const getAllWithService = (service) => {};
