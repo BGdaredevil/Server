@@ -16,7 +16,6 @@ const getOne = (id) => {
           model: "Car",
         },
       },
-      // model: "Shop",
     })
     .lean();
 };
@@ -45,8 +44,34 @@ const remService = async (shopId, serviceId) => {
     { runValidators: true, new: true }
   ).populate({
     path: "offeredServices",
-    model: "Shop",
-    populate: "registered",
+    populate: {
+      path: "registered",
+      model: "Service",
+      populate: {
+        path: "bookings",
+        model: "Car",
+      },
+    },
+  });
+};
+
+const remSimpleService = async (shopId, { item }) => {
+  const shop = await Shop.findById(shopId);
+  shop.offeredServices.notRegistered = shop.offeredServices.notRegistered.filter((e) => e !== item);
+  return Shop.findOneAndUpdate(
+    { _id: shopId },
+    { ...shop, offeredServices: shop.offeredServices },
+    { runValidators: true, new: true }
+  ).populate({
+    path: "offeredServices",
+    populate: {
+      path: "registered",
+      model: "Service",
+      populate: {
+        path: "bookings",
+        model: "Car",
+      },
+    },
   });
 };
 
@@ -103,6 +128,7 @@ const shopService = {
   getAllWithService,
   regService,
   remService,
+  remSimpleService,
 };
 
 export default shopService;

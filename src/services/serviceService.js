@@ -1,4 +1,5 @@
 import Service from "../models/service.js";
+import bookingService from "./bookingService.js";
 import shopService from "./shopService.js";
 
 const create = async (data, shopId) => {
@@ -9,12 +10,21 @@ const getOne = () => {};
 const getAll = () => {};
 const getAllShopsWith = () => {};
 const getAllInShop = () => {};
+
 const bookACar = async (serviceId, carId) => {
   const service = await Service.findById(serviceId);
   service.bookings.push(carId);
   await service.updateOne({ $set: { bookings: service.bookings } });
+  await bookingService.create({
+    car: carId,
+    feedback: false,
+    state: "pending",
+    vendor: service.offeringShop,
+    service: serviceId,
+  });
   return shopService.getOne(service.offeringShop);
 };
+
 const edit = (id, data) => {
   return Service.findOneAndUpdate(
     { _id: id },
@@ -22,6 +32,7 @@ const edit = (id, data) => {
     { runValidators: true }
   );
 };
+
 const del = async (id) => {
   const deletedService = await Service.findByIdAndDelete(id);
   return shopService.remService(deletedService.offeringShop, id);

@@ -19,8 +19,8 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 10,
   },
-  cars: [{ type: mongoose.Schema.Types.ObjectId, ref: "car" }],
-  shops: [{ type: mongoose.Schema.Types.ObjectId, ref: "shop" }],
+  // cars: [{ type: mongoose.Schema.Types.ObjectId, ref: "car" }],
+  // shops: [{ type: mongoose.Schema.Types.ObjectId, ref: "shop" }],
 });
 
 // UserSchema.pre("save", async function (next) {
