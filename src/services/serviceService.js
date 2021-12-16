@@ -25,6 +25,13 @@ const bookACar = async (serviceId, carId) => {
   return shopService.getOne(service.offeringShop);
 };
 
+const removeBooking = async (serviceId, booking) => {
+  const service = await Service.findById(serviceId);
+  service.bookings = service.bookings.filter((b) => b._id.toString() !== booking.car.toString());
+  await service.updateOne({ $set: { bookings: service.bookings } });
+  return bookingService.edit(booking._id, booking);
+};
+
 const edit = (id, data) => {
   return Service.findOneAndUpdate(
     { _id: id },
@@ -47,6 +54,7 @@ const serviceService = {
   getAllShopsWith,
   edit,
   del,
+  removeBooking,
 };
 
 export default serviceService;
