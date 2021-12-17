@@ -57,8 +57,6 @@ router.patch("/details/:id", async (req, res) => {
 
 router.put("/details/:id", async (req, res) => {
   try {
-    // console.log(req.body);
-    // return;
     let tt = await shopService.remSimpleService(req.params.id, req.body);
     res.json(tt);
     res.status(200).end();
@@ -82,6 +80,17 @@ router.delete("/:id", async (req, res) => {
 router.get("/shops/:type", async (req, res) => {
   try {
     let tt = await shopService.getAllOfType(req.params.type);
+    res.json(tt);
+    res.status(200).end();
+  } catch (err) {
+    res.json(err);
+    res.status(400).end();
+  }
+});
+
+router.get("/voting/:keyWord/:bookingId/:shopId", async (req, res) => {
+  try {
+    let tt = await shopService.vote(req.params.bookingId, req.params.shopId, req.params.keyWord);
     res.json(tt);
     res.status(200).end();
   } catch (err) {

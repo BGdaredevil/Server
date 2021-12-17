@@ -1,4 +1,5 @@
 import Shop from "../models/shop.js";
+import bookingService from "./bookingService.js";
 
 const create = (data) => {
   return Shop.create(data);
@@ -31,6 +32,22 @@ const edit = async (id, data) => {
     { ...data, offeredServices: shop.offeredServices },
     { runValidators: true }
   );
+};
+
+const vote = async (bookingId, shopId, keyWord) => {
+  const booking = await bookingService.getFeedbackStatus(bookingId);
+  if (!booking.feedback) {
+    let res = await bookingService.edit(bookingId, { feedback: true });
+    let voters = await bookingService.countVoted(bookingId, shopId);
+    let shop = await Shop.findById(shopId);
+    if (keyWord === "upvote") {
+      shop.rating += 1;
+    }
+    shop.rating = (shop.rating / (voters + 10)) * 10;
+
+    await Shop.findByIdAndUpdate(shopId, shop, { runValidators: true, new: true });
+  }
+  return bookingService.getOneFullLean(bookingId);
 };
 
 const remService = async (shopId, serviceId) => {
@@ -129,6 +146,7 @@ const shopService = {
   regService,
   remService,
   remSimpleService,
+  vote,
 };
 
 export default shopService;

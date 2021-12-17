@@ -23,7 +23,7 @@ router.post("/", async (req, res) => {
       firebaseUid: req.body.uid,
     });
 
-    res.json({ pesho: "hello" });
+    res.json(rr);
     res.status(200).end();
   } catch (err) {
     res.json(err);

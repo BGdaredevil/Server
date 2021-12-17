@@ -42,7 +42,8 @@ const edit = (id, data) => {
 
 const del = async (id) => {
   const deletedService = await Service.findByIdAndDelete(id);
-  return shopService.remService(deletedService.offeringShop, id);
+  await bookingService.addLegacyService(deletedService);
+  return await shopService.remService(deletedService.offeringShop, id);
 };
 
 const serviceService = {
