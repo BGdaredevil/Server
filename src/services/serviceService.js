@@ -11,23 +11,24 @@ const getAll = () => {};
 const getAllShopsWith = () => {};
 const getAllInShop = () => {};
 
-const bookACar = async (serviceId, carId) => {
-  const service = await Service.findById(serviceId);
-  service.bookings.push(carId);
-  await service.updateOne({ $set: { bookings: service.bookings } });
-  await bookingService.create({
+const bookACar = async (serviceId, carId, shopId) => {
+  const booking = await bookingService.create({
     car: carId,
     feedback: false,
     state: "pending",
-    vendor: service.offeringShop,
+    vendor: shopId,
     service: serviceId,
   });
-  return shopService.getOne(service.offeringShop);
+  const service = await Service.findById(serviceId);
+  service.bookings.push(booking._id);
+  await service.updateOne({ $set: { bookings: service.bookings } });
+
+  return shopService.getOne(shopId);
 };
 
 const removeBooking = async (serviceId, booking) => {
   const service = await Service.findById(serviceId);
-  service.bookings = service.bookings.filter((b) => b._id.toString() !== booking.car.toString());
+  service.bookings = service.bookings.filter((b) => b._id.toString() !== booking._id.toString());
   await service.updateOne({ $set: { bookings: service.bookings } });
   return bookingService.edit(booking._id, booking);
 };

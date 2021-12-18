@@ -9,9 +9,7 @@ router.post("/accept", async (req, res) => {
   try {
     let car = await carService.edit(req.body.carId, { odometer: req.body.odometer });
     let tt = await bookingService.accept({
-      carId: req.body.carId,
-      serviceId: req.body.serviceId,
-      shopId: req.body.shopId,
+      bookingId: req.body.bookingId,
       comment: req.body.comment,
       odometer: req.body.odometer,
     });
@@ -26,8 +24,7 @@ router.post("/accept", async (req, res) => {
 router.post("/reject", async (req, res) => {
   try {
     let tt = await bookingService.reject({
-      carId: req.body.carId,
-      serviceId: req.body.serviceId,
+      bookingId: req.body.bookingId,
       shopId: req.body.shopId,
     });
     // let ss = await serviceService.removeBooking(req.body.serviceId, tt);

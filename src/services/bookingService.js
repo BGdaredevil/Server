@@ -27,23 +27,23 @@ const edit = (id, data) => {
   return Booking.findOneAndUpdate({ _id: id }, data, { runValidators: true, new: true });
 };
 
-const accept = ({ carId, serviceId, shopId, comment }) => {
+const accept = ({ comment, odometer, bookingId }) => {
   return Booking.findOneAndUpdate(
-    { car: carId, vendor: shopId, service: serviceId },
-    { state: "complete", comment },
+    { _id: bookingId },
+    { state: "complete", comment, odometer },
     { runValidators: true, new: true }
   );
 };
 
-const reject = ({ carId, serviceId, shopId }) => {
+const reject = ({ bookingId }) => {
   return Booking.findOneAndUpdate(
-    { car: carId, vendor: shopId, service: serviceId },
+    { _id: bookingId },
     { state: "rejected" },
     { runValidators: true, new: true }
   );
 };
 
-const countVoted = (bookingId, shopId) => {
+const countVoted = (shopId) => {
   return Booking.where({ feedback: true, vendor: shopId }).count().lean();
 };
 

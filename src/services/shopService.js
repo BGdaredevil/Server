@@ -14,7 +14,8 @@ const getOne = (id) => {
         model: "Service",
         populate: {
           path: "bookings",
-          model: "Car",
+          model: "Booking",
+          populate: { path: "car", model: "Car" },
         },
       },
     })
@@ -38,12 +39,14 @@ const vote = async (bookingId, shopId, keyWord) => {
   const booking = await bookingService.getFeedbackStatus(bookingId);
   if (!booking.feedback) {
     let res = await bookingService.edit(bookingId, { feedback: true });
-    let voters = await bookingService.countVoted(bookingId, shopId);
+    let voters = await bookingService.countVoted(shopId);
     let shop = await Shop.findById(shopId);
     if (keyWord === "upvote") {
-      shop.rating += 1;
+      shop.likes += 1;
+    } else {
+      shop.likes -= 2;
     }
-    shop.rating = (shop.rating / (voters + 10)) * 10;
+    shop.rating = (shop.likes / (voters + 10)) * 10;
 
     await Shop.findByIdAndUpdate(shopId, shop, { runValidators: true, new: true });
   }
@@ -66,7 +69,8 @@ const remService = async (shopId, serviceId) => {
       model: "Service",
       populate: {
         path: "bookings",
-        model: "Car",
+        model: "Booking",
+        populate: { path: "car", model: "Car" },
       },
     },
   });
@@ -86,7 +90,8 @@ const remSimpleService = async (shopId, { item }) => {
       model: "Service",
       populate: {
         path: "bookings",
-        model: "Car",
+        model: "Booking",
+        populate: { path: "car", model: "Car" },
       },
     },
   });

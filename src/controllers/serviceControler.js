@@ -37,7 +37,7 @@ router.patch("/details/:id", async (req, res) => {
 router.patch("/:id", async (req, res) => {
   try {
     console.log(req.body);
-    let tt = await serviceService.bookACar(req.params.id, req.body.car);
+    let tt = await serviceService.bookACar(req.params.id, req.body.car, req.body.shop);
     res.json(tt);
     res.status(200).end();
   } catch (err) {

@@ -4,9 +4,7 @@ const ShopSchema = new mongoose.Schema({
   name: {
     type: String,
   },
-  location: {
-    type: String,
-  },
+
   specification: {
     type: String,
   },
@@ -31,13 +29,15 @@ const ShopSchema = new mongoose.Schema({
     type: Number,
     default: 10,
   },
+
+  likes: {
+    type: Number,
+    default: 10,
+  },
+
   owner: {
     // type: mongoose.Schema.Types.ObjectId,
     // ref: "User",
-    type: String,
-  },
-  workHistory: {
-    //! make it a separate mongoose model
     type: String,
   },
 });

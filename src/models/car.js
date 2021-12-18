@@ -7,16 +7,9 @@ const CarSchema = new mongoose.Schema({
   odometer: { type: Number },
   imageUrl: { type: String },
   owner: {
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: "User",
     type: String,
   },
-  workHistory: [
-    {
-      //! make it a separate mongoose model
-      type: String,
-    },
-  ],
+  workHistory: { type: Array },
 });
 
 const Car = mongoose.model("Car", CarSchema);
