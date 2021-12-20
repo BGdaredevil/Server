@@ -77,6 +77,25 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+router.get("/shops/best", async (req, res) => {
+  const { service } = req.query;
+  try {
+    let tt;
+    if (service) {
+      tt = await shopService.getAllWithService(service);
+    } else {
+      tt = await shopService.getBestThree();
+    }
+    // console.log(tt);
+    res.json(tt);
+    res.status(200).end();
+  } catch (err) {
+    console.log(err);
+    res.json(err);
+    res.status(400).end();
+  }
+});
+
 router.get("/shops/:type", async (req, res) => {
   try {
     let tt = await shopService.getAllOfType(req.params.type);

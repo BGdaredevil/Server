@@ -1,3 +1,4 @@
+import Service from "../models/service.js";
 import Shop from "../models/shop.js";
 import bookingService from "./bookingService.js";
 
@@ -127,7 +128,39 @@ const getAllOfType = (type) => {
     .lean();
 };
 
-const getAllWithService = (service) => {};
+const getBestThree = () => {
+  return Shop.find({})
+    .where("likes")
+    .gt(10)
+    .sort({ rating: -1 })
+    .limit(3)
+    .populate({
+      path: "offeredServices",
+      model: "Shop",
+      populate: "registered",
+    })
+    .lean();
+};
+
+const getAllWithService = async (service) => {
+  let tt = (
+    await Service.find({ name: { $regex: service, $options: "i" } })
+      .select({ offeringShop: 1, _id: 0 })
+      .lean()
+  ).reduce((a, e) => {
+    a.push(e.offeringShop);
+    return a;
+  }, []);
+
+  return Shop.find({ _id: { $in: tt } })
+    .populate({
+      path: "offeredServices",
+      model: "Shop",
+      populate: "registered",
+    })
+    .sort({ rating: -1 })
+    .lean();
+};
 
 const regService = async (shopId, service) => {
   const shop = await Shop.findById(shopId);
@@ -152,6 +185,7 @@ const shopService = {
   remService,
   remSimpleService,
   vote,
+  getBestThree,
 };
 
 export default shopService;
