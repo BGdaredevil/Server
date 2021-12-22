@@ -8,7 +8,8 @@ export default (app) => {
   app.use(cookieParser());
   app.use(
     cors({
-      origin: "http://localhost:3000",
+      // origin: "http://localhost:3000",
+      origin: true,
       methods: ["POST", "PUT", "GET", "OPTIONS", "PATCH", "DELETE"],
       credentials: true,
     })
